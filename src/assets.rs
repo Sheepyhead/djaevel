@@ -51,9 +51,18 @@ fn load_texture_atlases(
         Vec2::new(16.0, 0.0),
     ));
     commands.insert_resource(PlayerSprites { idle, run });
+
+    let handle =
+        ass.load("generic-rpg-pack_v0.4_(alpha-release)_vacaroxa/rpg-pack/mobs/slime-orange.png");
+    let slime = texture_atlantes.add(TextureAtlas::from_grid(handle, Vec2::new(16.0, 24.0), 4, 1));
+    commands.insert_resource(EnemySprites { slime });
 }
 
 pub struct PlayerSprites {
     pub idle: Handle<TextureAtlas>,
     pub run: Handle<TextureAtlas>,
+}
+
+pub struct EnemySprites {
+    pub slime: Handle<TextureAtlas>,
 }

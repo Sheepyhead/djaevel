@@ -46,7 +46,7 @@ fn spawn(mut commands: Commands, sprites: Res<PlayerSprites>) {
 }
 
 #[derive(Component, Default)]
-struct Player;
+pub struct Player;
 
 #[derive(Bundle, Default)]
 struct PlayerBundle {
@@ -64,6 +64,7 @@ enum Action {
 }
 
 fn run(
+    time: Res<Time>,
     sprites: Option<Res<PlayerSprites>>,
     mut query: Query<
         (
@@ -79,7 +80,7 @@ fn run(
     for (action_state, mut transform, mut atlas, mut animate, mut sprite) in query.iter_mut() {
         if action_state.pressed(Action::Run) {
             let axis_pair = action_state.axis_pair(Action::Run).unwrap();
-            transform.translation += axis_pair.xy().extend(0.0);
+            transform.translation += axis_pair.xy().extend(0.0) * time.delta_seconds() * 100.0;
             if axis_pair.x() < 0.0 {
                 sprite.flip_x = true;
             } else {
