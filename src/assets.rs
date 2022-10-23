@@ -41,9 +41,19 @@ fn load_texture_atlases(
 ) {
     let handle = ass.load("Pixel Crawler 1.1/Heroes/Knight/Idle/Idle-Sheet.png");
     let idle = texture_atlantes.add(TextureAtlas::from_grid(handle, Vec2::splat(32.0), 4, 1));
-    commands.insert_resource(PlayerSprites { idle });
+    let handle = ass.load("Pixel Crawler 1.1/Heroes/Knight/Run/Run-Sheet.png");
+    let run = texture_atlantes.add(TextureAtlas::from_grid_with_padding(
+        handle,
+        Vec2::splat(32.0),
+        6,
+        2,
+        Vec2::new(32.0, 0.0),
+        Vec2::new(16.0, 0.0),
+    ));
+    commands.insert_resource(PlayerSprites { idle, run });
 }
 
 pub struct PlayerSprites {
     pub idle: Handle<TextureAtlas>,
+    pub run: Handle<TextureAtlas>,
 }
