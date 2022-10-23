@@ -10,6 +10,7 @@ bevy = "0.8"
 alsa = "=0.6.0"
 iyes_loopless = "0.7"
 leafwing-input-manager = "0.6"
+bevy_rapier2d = "0.17"
 
 [profile.dev]
 opt-level = 1

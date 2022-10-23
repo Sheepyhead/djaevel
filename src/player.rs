@@ -1,4 +1,5 @@
 use bevy::prelude::*;
+use bevy_rapier2d::{prelude::{Collider, RigidBody, Sensor}, rapier::prelude::ColliderType};
 use iyes_loopless::prelude::*;
 use leafwing_input_manager::prelude::*;
 
@@ -41,6 +42,7 @@ fn spawn(mut commands: Commands, sprites: Res<PlayerSprites>) {
             .build(),
             ..default()
         },
+        collider: Collider::ball(13.0),
         ..default()
     });
 }
@@ -56,6 +58,8 @@ struct PlayerBundle {
     animate: AnimateSprite,
     #[bundle]
     input: InputManagerBundle<Action>,
+    collider: Collider,
+    sensor: Sensor,
 }
 
 #[derive(Actionlike, PartialEq, Eq, Clone, Copy, Hash, Debug)]

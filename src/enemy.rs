@@ -4,6 +4,7 @@ use crate::{
     player::Player,
 };
 use bevy::prelude::*;
+use bevy_rapier2d::prelude::*;
 use iyes_loopless::prelude::*;
 
 pub struct EnemyPlugin;
@@ -42,6 +43,13 @@ fn spawn(
                 sequence: (0..4).collect(),
                 ..default()
             },
+            collider: Collider::ball(10.0),
+            rbody: RigidBody::Dynamic,
+            axes: LockedAxes::ROTATION_LOCKED,
+            damping: Damping {
+                linear_damping: 10.0,
+                ..default()
+            },
             ..default()
         });
     }
@@ -56,6 +64,10 @@ struct EnemyBundle {
     sprite: SpriteSheetBundle,
     animate: AnimateSprite,
     enemy: Enemy,
+    collider: Collider,
+    rbody: RigidBody,
+    axes: LockedAxes,
+    damping: Damping,
 }
 
 fn act(
