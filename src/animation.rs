@@ -21,11 +21,8 @@ fn animate_sprites(
 ) {
     for (mut sprite, mut animate) in sprites.iter_mut() {
         if animate.timer.tick(time.delta()).just_finished() {
-            if animate.current_index + 1 == animate.sequence.len() {
-                animate.current_index = 0;
-            } else {
-                animate.current_index += 1;
-            }
+            animate.current_index += 1;
+            animate.current_index %= animate.sequence.len();
             sprite.index = animate.sequence[animate.current_index];
         }
     }
