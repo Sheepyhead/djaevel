@@ -1,11 +1,12 @@
 use bevy::prelude::*;
-use bevy_rapier2d::{prelude::{Collider, RigidBody, Sensor}, rapier::prelude::ColliderType};
+use bevy_rapier2d::prelude::*;
 use iyes_loopless::prelude::*;
 use leafwing_input_manager::prelude::*;
 
 use crate::{
     animation::AnimateSprite,
     assets::{LoadingState, PlayerSprites},
+    stats::HitPoints,
 };
 
 pub struct PlayerPlugin;
@@ -60,6 +61,7 @@ struct PlayerBundle {
     input: InputManagerBundle<Action>,
     collider: Collider,
     sensor: Sensor,
+    hit_points: HitPoints,
 }
 
 #[derive(Actionlike, PartialEq, Eq, Clone, Copy, Hash, Debug)]

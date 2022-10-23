@@ -5,12 +5,14 @@ use bevy_rapier2d::{prelude::*, render::RapierDebugRenderPlugin};
 use camera::CameraPlugin;
 use enemy::EnemyPlugin;
 use player::PlayerPlugin;
+use stats::Stats;
 
 mod animation;
 mod assets;
 mod camera;
 mod enemy;
 mod player;
+mod stats;
 
 fn main() {
     App::new()
@@ -27,5 +29,6 @@ fn main() {
         .add_plugin(CameraPlugin)
         .add_plugin(EnemyPlugin)
         .add_plugin(PlayerPlugin)
+        .add_plugin(Stats)
         .run();
 }
