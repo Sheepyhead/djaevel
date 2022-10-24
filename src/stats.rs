@@ -35,7 +35,7 @@ impl HitPoints {
         self.current == 0
     }
 
-    fn new(amount: u32) -> Self {
+    pub fn new(amount: u32) -> Self {
         Self {
             current: amount,
             _max: amount,

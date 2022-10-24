@@ -7,6 +7,7 @@ use crate::{
     animation::AnimateSprite,
     assets::{LoadingState, PlayerSprites},
     stats::HitPoints,
+    weapon::DaggerSkill,
 };
 
 pub struct PlayerPlugin;
@@ -20,32 +21,36 @@ impl Plugin for PlayerPlugin {
 }
 
 fn spawn(mut commands: Commands, sprites: Res<PlayerSprites>) {
-    commands.spawn_bundle(PlayerBundle {
-        sprite: SpriteSheetBundle {
-            texture_atlas: sprites.idle.clone(),
+    commands
+        .spawn_bundle(PlayerBundle {
+            sprite: SpriteSheetBundle {
+                texture_atlas: sprites.idle.clone(),
+                ..default()
+            },
+            animate: AnimateSprite {
+                timer: Timer::from_seconds(0.2, true),
+                sequence: vec![0, 1, 2, 3, 2, 1],
+                ..default()
+            },
+            input: InputManagerBundle::<Action> {
+                input_map: InputMap::new([(
+                    VirtualDPad {
+                        up: KeyCode::Comma.into(),
+                        down: KeyCode::O.into(),
+                        left: KeyCode::A.into(),
+                        right: KeyCode::E.into(),
+                    },
+                    Action::Run,
+                )])
+                .build(),
+                ..default()
+            },
+            collider: Collider::ball(13.0),
             ..default()
-        },
-        animate: AnimateSprite {
-            timer: Timer::from_seconds(0.2, true),
-            sequence: vec![0, 1, 2, 3, 2, 1],
-            ..default()
-        },
-        input: InputManagerBundle::<Action> {
-            input_map: InputMap::new([(
-                VirtualDPad {
-                    up: KeyCode::Comma.into(),
-                    down: KeyCode::O.into(),
-                    left: KeyCode::A.into(),
-                    right: KeyCode::E.into(),
-                },
-                Action::Run,
-            )])
-            .build(),
-            ..default()
-        },
-        collider: Collider::ball(13.0),
-        ..default()
-    });
+        })
+        .insert_bundle((DaggerSkill {
+            cooldown: Timer::from_seconds(0.5, true),
+        },));
 }
 
 #[derive(Component, Default)]
